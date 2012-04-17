@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name       TornGain
 // @namespace  http://xaph.info/
-// @version    0.2.0
+// @version    0.2.1
 // @description  Torn City is a text based crime RPG. TornGain is an userscript that gives your total gain from the stocks. If you don't know what is Torn you're welcome: http://www.torn.com/1579896
 // @require    https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js
 // @match      http://*.torn.com/*
@@ -30,17 +30,17 @@ $(document).ready(function() {
       totalGain = quantity*gain;
       if(totalGain>0) {
           totalPositive += totalGain;
-          tableRows.eq(3+i).children().eq(0).append("<br>$<span class='gain' style='color: green'>("+totalGain.toFixed(2)+")</span>");
+          tableRows.eq(3+i).children().eq(0).append("<br>$<span class='gain' style='color: green'>("+Math.round(totalGain)+")</span>");
       } else {
           totalNegative += totalGain;
-          tableRows.eq(3+i).children().eq(0).append("<br>$<span class='gain' style='color: red'>("+totalGain.toFixed(2)+")</span>");
+          tableRows.eq(3+i).children().eq(0).append("<br>$<span class='gain' style='color: red'>("+Math.round(totalGain)+")</span>");
       }
       i = i+7;
     }
     nvcolor = totalPositive >= totalNegative*-1 ? 'green' : 'red';
-    tableBody.prepend("<tr><td>Net Value:</td><td>$<span class='gain' style='color: "+nvcolor+"'>"+(totalPositive+totalNegative).toFixed(2)+
-                      "</span></td><td>Earned:</td><td>$<span class='gain' style='color: green'>"+totalPositive.toFixed(2)+
-                      "</span></td><td>Lost:</td><td>$<span class='gain' style='color: red'>"+totalNegative.toFixed(2)+"</span></td></tr>");
+    tableBody.prepend("<tr><td>Net Value:</td><td>$<span class='gain' style='color: "+nvcolor+"'>"+Math.round((totalPositive+totalNegative))+
+                      "</span></td><td>Earned:</td><td>$<span class='gain' style='color: green'>"+Math.round(totalPositive)+
+                      "</span></td><td>Lost:</td><td>$<span class='gain' style='color: red'>"+Math.round(totalNegative)+"</span></td></tr>");
     $(".gain").digits();
   }
 });
